@@ -1,0 +1,139 @@
+app:
+  datasource:
+    #### postgresql
+    smsin:
+      driverClassName: com.mysql.jdbc.Driver
+      url: ${SPRING_DATASOURCE_URL}
+      username: ${SPRING_DATASOURCE_USERNAME}
+      password: ${SPRING_DATASOURCE_PASSWORD}
+      hibernate:
+        ddl-auto: ${SPRING_DB_HIBERNATE_DLL}
+    #### kannel
+    smsreceived:
+      driverClassName: com.mysql.jdbc.Driver
+      url: ${SPRING_DATASOURCE_URL_KANNLE}
+      username: ${SPRING_DATASOURCE_USERNAME_KANNLE}
+      password: ${SPRING_DATASOURCE_PASSWORD_KANNLE}
+      testWhileIdle: true
+      validationQuery: SELECT 1
+      hibernate:
+        ddl-auto: ${SPRING_DB_HIBERNATE_DLL_KANNEL}
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVER_SERVICE}
+  instance:
+    prefer-ip-address: true
+logging:
+  level:
+    org:
+      hibernate: ERROR
+      springframework:
+        web: DEBUG
+org:
+  quartz:
+    jobStore:
+      clusterCheckinInterval: 1000
+      isClustered: true
+    scheduler:
+      instanceId: 'AUTO '
+      instanceName: spring-boot-quartz
+    threadPool:
+      class: org.quartz.simpl.SimpleThreadPool
+      threadCount: 100
+      threadPriority: 10
+server:
+  port: 8443
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: taxi-client
+  banner:
+    location: classpath:banner.txt
+  datasource:
+    hikari:
+      connection-timeout: 600000
+      idle-timeout: 60000
+      max-lifetime: 1800000
+      maximum-pool-size: 500
+      minimum-idle: 20
+      validation-timeout: 3000
+  jpa:
+    database: mysql
+    generate-ddl: true
+    hibernate:
+      ddl-auto: ${SPRING_DB_HIBERNATE_DLL}
+    properties:
+      hibernate:
+        connection:
+          CharSet: UTF-8
+          characterEncoding: UTF-8
+          useUnicode: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  multirabbitmq:
+    client:
+      host: ${SPRING_RABBIT_MQ_URL}
+      username: ${SPRING_RABBIT_MQ_USERNAME}
+      password: ${SPRING_RABBIT_MQ_PASSWORD}
+      port: ${SPRING_RABBIT_MQ_PORT}
+      queue: ${SPRING_RABBIT_MQ_QUEUE}
+    taxi:
+      host: ${SPRING_RABBIT_MQ_URL}
+      password: rabbitmq
+      port: 5672
+      queue: taxi-service
+      username: rabbitmq
+  mvc:
+    async:
+      request-timeout: 750
+
+    #rabbitmq service sms-out
+
+  rabbitmq:
+    sms-out:
+      host: ${SPRING_RABBIT_MQ_URL}
+      port: ${SPRING_RABBIT_MQ_PORT}
+      username: ${SPRING_RABBIT_MQ_USERNAME}
+      password: ${SPRING_RABBIT_MQ_PASSWORD}
+      virtual-host: ${SPRING_RABBIT_MQ_VIRTUAL_HOST}
+      queue: sms-out
+
+
+
+
+    #        client:
+    #            virtual-host: sms
+    #        host: ${SPRING_RABBIT_MQ_URL}
+    #        password: ${SPRING_RABBIT_MQ_PASSWORD}
+    #        port: ${SPRING_RABBIT_MQ_PORT}
+    #        queue: ${SPRING_RABBIT_MQ_QUEUE}
+    #
+    #
+    matchingclient:
+      host: ${SPRING_RABBIT_MQ_URL}
+      password: rabbitmq
+      port: 5672
+      queue: matching-client
+      username: rabbitmq
+      virtual-host: sms
+
+    matchingtaxi:
+      host: ${SPRING_RABBIT_MQ_URL}
+      password: rabbitmq
+      port: 5672
+      queue: matching-taxi
+      username: ${SPRING_RABBIT_MQ_USERNAME}
+      virtual-host: sms
+
+
+#        taxi:
+#            virtual-host: sms
+#        username: ${SPRING_RABBIT_MQ_USERNAME}
+#        virtual-host: ${SPRING_RABBIT_MQ_VIRTUAL_HOST}
