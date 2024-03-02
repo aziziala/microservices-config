@@ -1,0 +1,40 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
+  instance:
+    prefer-ip-address: true
+server:
+  port: 8091
+spring:
+  application:
+    name: smsoutservice
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: ''
+    testWhileIdle: true
+    url: jdbc:mysql://localhost:3306/kannel?&charset=UTF-8&coding=2
+    username: root
+    validationQuery: SELECT 1
+  jpa:
+    database: MYSQL
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+      #naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        connection:
+          CharSet: UTF-8
+          characterEncoding: UTF-8
+          useUnicode: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
+  rabbitmq:
+    sms-out:
+      host: ${SPRING_RABBIT_MQ_URL}
+      password: ${SPRING_RABBIT_MQ_PASSWORD}
+      username: ${SPRING_RABBIT_MQ_USERNAME}
+      port: ${SPRING_RABBIT_MQ_PORT}
+      queue: ${SPRING_RABBIT_MQ_QUEUE}
+      virtual-host: ${SPRING_RABBIT_MQ_VIRTUAL_HOST}
